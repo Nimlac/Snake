@@ -32,8 +32,11 @@ document.addEventListener('keydown', function (event) {
         case "l": {
             init()
         }
+        default:{
+            return;
+        }
     }
-    //document.getElementById(cord.join(":")).setAttribute("style", "background-color: red;")
+    event.preventDefault();
 });
 
 let Snake;
@@ -56,9 +59,6 @@ function init() {
     lastdir = 'd';
 
     directions = [];
-    /*document.getElementById("7:2").setAttribute("style", "background-image: blue;");
-    document.getElementById("7:3").setAttribute("style", "background-color: blue;");
-    document.getElementById("7:4").setAttribute("style", "background-color: cyan;");*/
 
     document.getElementById("7:2").setAttribute("style", "background-image: url(sprites/tail_d.png);");
     document.getElementById("7:3").setAttribute("style", "background-image: url(sprites/body_dd.png);");
@@ -93,7 +93,6 @@ function play() {
     if (directions.length == 0) {
         directions.push(lastdir)
     }
-    //document.getElementById(head[0] + ":" + head[1]).setAttribute("style", "background-image: url(sprites/body_"+lastdir+directions[0]+".png);");
 
     switch (directions[0]) {
         case 'w':
@@ -164,11 +163,8 @@ function play() {
     }
     document.getElementById(head[0] + ":" + head[1]).setAttribute("style", "background-image: url(sprites/body_"+lastdir+directions[0]+".png);");
 
-
     lastdir = directions[0];
     directions.shift()
-
-
 
     if (snake.some(x => x[0] == next[0] && x[1] == next[1])) {
         alert("YOU LOST   SCORE: " + score);
@@ -177,10 +173,6 @@ function play() {
     }
     snake.push([next[0],next[1],lastdir]);
 
-    //MOVE
-
-
-    
     document.getElementById(next[0] + ":" + next[1]).setAttribute("style", "background-image: url(sprites/head_"+lastdir+".png);");
 
 
@@ -219,10 +211,6 @@ function play() {
         document.getElementById(l[0] + ":" + l[1]).setAttribute("style", "background-image: none;");
         FieldAv.push(snake.shift());
     }
-
-
-
-
 }
 
 init()
