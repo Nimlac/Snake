@@ -139,6 +139,11 @@ function play() {
                     next = [head[0] - 1, head[1]];
                 }
                 else {
+                    if (head[0] == height) {
+                        alert("YOU LOST   SCORE: " + score);
+                        init();
+                        return;
+                    }
                     next = [head[0] + 1, head[1]];
                     directions[0] = lastdir;
                 }
@@ -155,6 +160,11 @@ function play() {
                     next = [head[0], head[1] + 1];
                 }
                 else {
+                    if (head[1] == 0) {
+                        alert("YOU LOST   SCORE: " + score);
+                        init();
+                        return;
+                    }
                     next = [head[0], head[1] - 1];
                     directions[0] = lastdir;
                 }
@@ -171,6 +181,11 @@ function play() {
                     next = [head[0] + 1, head[1]];
                 }
                 else {
+                    if (head[0] == 0) {
+                        alert("YOU LOST   SCORE: " + score);
+                        init();
+                        return;
+                    }
                     next = [head[0] - 1, head[1]];
                     directions[0] = lastdir;
                 }
@@ -187,6 +202,11 @@ function play() {
                     next = [head[0], head[1] - 1];
                 }
                 else {
+                    if (head[1] == width) {
+                        alert("YOU LOST   SCORE: " + score);
+                        init();
+                        return;
+                    }
                     next = [head[0], head[1] + 1];
                     directions[0] = lastdir;
                 }
