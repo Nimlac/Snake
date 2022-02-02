@@ -6,6 +6,9 @@ function preload() {
     }
 }
 
+document.cookie = "name=Player";
+
+
 // preload images to avoid lag while playing
 preload(
     "sprites/apple.png",
@@ -43,29 +46,34 @@ let id = null;
 document.addEventListener('keydown', function (event) {
     switch (event.key) {
         case "ArrowUp":
+        case "W":
         case "w": {
             directions.push('w')
             break;
         }
         case "ArrowLeft":
+        case "A":
         case "a": {
             directions.push('a')
             break;
         }
         case "ArrowDown":
+        case "S":
         case "s": {
             directions.push('s')
             break;
         }
         case "ArrowRight":
+        case "D":
         case "d": {
             directions.push('d')
             break;
         }
+        case "L":
         case "l": {
             init()
         }
-        default:{
+        default: {
             return;
         }
     }
@@ -79,9 +87,28 @@ let head;
 let apple;
 let next;
 
+function death(){
+    let person = prompt("YOU LOST SCORE: " + score + "\nPlease enter your name:", document.cookie.split(";").filter(x=> x.startsWith("name="))[0].split("=")[1]);
+    if (person != null && person != "") {
+        document.cookie = "name="+person;
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "cgi-bin/highscore.py?name="+person+"&score="+score, true);
+        xhttp.onreadystatechange = function() {
+           if (this.readyState == 4 && this.status == 200) {
+        
+                // Response
+                var response = JSON.parse(this.responseText);
+                document.getElementById("highscore").innerHTML=response.join("<br>").replace(/,/g,": ");
+           }
+        };
+        xhttp.send();
+    }
+    init()
+}
+
 
 function init() {
-    snake = [[7, 2,'d'], [7, 3,'d'], [7, 4,'d']]
+    snake = [[7, 2, 'd'], [7, 3, 'd'], [7, 4, 'd']]
     FieldAv = [];
     for (let y = 0; y < 15; y++) {
         for (let x = 0; x < 17; x++) {
@@ -97,11 +124,11 @@ function init() {
     document.getElementById("7:3").setAttribute("style", "background-image: url(sprites/body_dd.png);");
     document.getElementById("7:4").setAttribute("style", "background-image: url(sprites/head_d.png);");
 
-    
+
     FieldAv = FieldAv.filter(x => x[1] != 2 || x[0] != 7);
     FieldAv = FieldAv.filter(x => x[1] != 3 || x[0] != 7);
     FieldAv = FieldAv.filter(x => x[1] != 4 || x[0] != 7);
-    
+
     document.getElementById("7:12").setAttribute("style", "background-image: url(sprites/apple.png);");
     if (apple != null) {
         document.getElementById(apple[0] + ":" + apple[1]).innerHTML = " ";
@@ -131,8 +158,7 @@ function play() {
         case 'w':
             {
                 if (head[0] == 0) {
-                    alert("YOU LOST   SCORE: " + score);
-                    init();
+                    death();
                     return;
                 }
                 if (lastdir != 's') {
@@ -140,8 +166,7 @@ function play() {
                 }
                 else {
                     if (head[0] == height) {
-                        alert("YOU LOST   SCORE: " + score);
-                        init();
+                        death();
                         return;
                     }
                     next = [head[0] + 1, head[1]];
@@ -152,8 +177,7 @@ function play() {
         case 'd':
             {
                 if (head[1] == width) {
-                    alert("YOU LOST   SCORE: " + score);
-                    init();
+                    death();
                     return;
                 }
                 if (lastdir != 'a') {
@@ -161,8 +185,7 @@ function play() {
                 }
                 else {
                     if (head[1] == 0) {
-                        alert("YOU LOST   SCORE: " + score);
-                        init();
+                        death();
                         return;
                     }
                     next = [head[0], head[1] - 1];
@@ -173,8 +196,7 @@ function play() {
         case 's':
             {
                 if (head[0] == height) {
-                    alert("YOU LOST   SCORE: " + score);
-                    init();
+                    death();
                     return;
                 }
                 if (lastdir != 'w') {
@@ -182,8 +204,7 @@ function play() {
                 }
                 else {
                     if (head[0] == 0) {
-                        alert("YOU LOST   SCORE: " + score);
-                        init();
+                        death();
                         return;
                     }
                     next = [head[0] - 1, head[1]];
@@ -194,8 +215,7 @@ function play() {
         case 'a':
             {
                 if (head[1] == 0) {
-                    alert("YOU LOST   SCORE: " + score);
-                    init();
+                    death();
                     return;
                 }
                 if (lastdir != 'd') {
@@ -203,8 +223,7 @@ function play() {
                 }
                 else {
                     if (head[1] == width) {
-                        alert("YOU LOST   SCORE: " + score);
-                        init();
+                        death();
                         return;
                     }
                     next = [head[0], head[1] + 1];
@@ -214,19 +233,18 @@ function play() {
             }
 
     }
-    document.getElementById(head[0] + ":" + head[1]).setAttribute("style", "background-image: url(sprites/body_"+lastdir+directions[0]+".png);");
+    document.getElementById(head[0] + ":" + head[1]).setAttribute("style", "background-image: url(sprites/body_" + lastdir + directions[0] + ".png);");
 
     lastdir = directions[0];
     directions.shift()
 
     if (snake.some(x => x[0] == next[0] && x[1] == next[1])) {
-        alert("YOU LOST   SCORE: " + score);
-        init();
+        death();
         return;
     }
-    snake.push([next[0],next[1],lastdir]);
+    snake.push([next[0], next[1], lastdir]);
 
-    document.getElementById(next[0] + ":" + next[1]).setAttribute("style", "background-image: url(sprites/head_"+lastdir+".png);");
+    document.getElementById(next[0] + ":" + next[1]).setAttribute("style", "background-image: url(sprites/head_" + lastdir + ".png);");
 
 
     FieldAv = FieldAv.filter(x => x[1] != next[1] || x[0] != next[0]);
@@ -259,7 +277,7 @@ function play() {
         }
     }
     else {
-        document.getElementById(snake[1][0] + ":" + snake[1][1]).setAttribute("style", "background-image: url(sprites/tail_"+snake[2][2]+".png);");
+        document.getElementById(snake[1][0] + ":" + snake[1][1]).setAttribute("style", "background-image: url(sprites/tail_" + snake[2][2] + ".png);");
         let l = snake[0];
         document.getElementById(l[0] + ":" + l[1]).setAttribute("style", "background-image: none;");
         FieldAv.push(snake.shift());

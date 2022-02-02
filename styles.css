@@ -15,7 +15,17 @@ table{
     border:10px solid brown;
     width: 970px;
     height: 870px;
-}   
+}
+#highscore{
+    position: fixed;
+    top: 120px;
+    left: 30px;
+    font-size: 32px;
+    line-height: 2;
+    columns: grey;
+    vertical-align: top;
+    width: 240px;
+}
 td{
     background-position: center;
     background-size: cover;
