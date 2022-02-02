@@ -92,7 +92,7 @@ function death(){
     if (person != null && person != "") {
         document.cookie = "name="+person;
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "cgi-bin/highscore.py?name="+person+"&score="+score, true);
+        xhttp.open("GET", "cgi-bin/highscore.py?name="+person.replace(/&/g,"&amp").replace(/</g,"&lt").replace(/>/g,"&gt")+"&score="+score, true);
         xhttp.onreadystatechange = function() {
            if (this.readyState == 4 && this.status == 200) {
         
