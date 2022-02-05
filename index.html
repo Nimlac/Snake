@@ -300,7 +300,43 @@
             <td id="14:16"> </td>
         </tr>
     </table>
+    <button onclick="OnOpenedSettings()" id="openButton">Settings</button>
+
     <p id="highscore"></p>
+    <p id="personal_best"></p>
+    <p id="settings">
+        <from name="settings">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name">
+            <button onclick="OnSubmitName()">Submit Name</button>
+            <br>
+
+            <label for="type">Snake:</label><br>
+            <select name="type" id="type">
+                <option value="green">green</option>
+            </select>
+            <button onclick="OnSubmitType()">Select Snake</button>
+            <br>
+
+            <label for="apple">Apple:</label><br>
+            <select name="apple" id="apple">
+                <option value="red">red</option>
+            </select>
+            <button onclick="OnSubmitApple()">Select Apple</button>
+            <br>
+
+            <label for="background">Background:</label><br>
+            <select name="background" id="background">
+                <option value="lime">lime</option>
+            </select>
+            <button onclick="OnSubmitBackground()">Select Background</button>
+            <br>
+
+            <button onclick="OnClosedSettings()">Close</button>
+
+        </from>
+        
+    </p>
     <script src="index.js" defer></script>
 </body>
 </html>

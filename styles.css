@@ -4,7 +4,8 @@ body{
 }
 p{
     text-align: center;
-    font-size: 48px;
+    font-size: 5vh;
+    height: 5vh;
     font-weight: bold;
     color: grey
 }
@@ -12,24 +13,42 @@ table{
     cursor: none;
     margin-right: auto;
     margin-left: auto;
-    border:10px solid brown;
-    width: 970px;
-    height: 870px;
+    border:1vh solid brown;
+}
+#openSettings{
+    position: fixed;
+    right:0px;
+    bottom:0px;
+}
+#settings{
+    position: fixed;
+    top: 0px;
+    width: 60%;
+    right: 20%;
+    height: 40vh;
 }
 #highscore{
     position: fixed;
     top: 120px;
     left: 30px;
-    font-size: 32px;
+    font-size: min(3vh,3vw);
     line-height: 2;
-    columns: grey;
     vertical-align: top;
-    width: 240px;
+    width: 16vw;
+}
+#personal_best{
+    position: fixed;
+    top: 120px;
+    right: 30px;
+    font-size: min(3vh,3vw);
+    line-height: 2;
+    vertical-align: top;
+    width: 16vw;
 }
 td{
     background-position: center;
     background-size: cover;
     background-color: lime;
-    width: 50px;
-    height: 50px;
+    width: min(5vw,5vh);
+    height: min(5vw,5vh);
 }
